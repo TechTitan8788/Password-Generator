@@ -1,0 +1,143 @@
+// import { useState, useCallback, useEffect, useRef } from 'react'
+
+// function App() {
+//   // State hooks for managing component state
+//   const [length, setLength] = useState(8) // Password length state
+//   const [numberAllowed, setNumberAllowed] = useState(false); // Include numbers state
+//   const [charAllowed, setCharAllowed] = useState(false) // Include special chars state
+//   const [password, setPassword] = useState("") // Generated password state
+
+//   // useRef hook to reference the password input field
+//   const passwordRef = useRef(null)
+
+//   /**
+//    * Password generator function using useCallback hook for memoization
+//    * This prevents unnecessary recreations of the function on every render
+//    * Only recreates when dependencies (length, numberAllowed, charAllowed) change
+//    */
+//   const passwordGenerator = useCallback(() => {
+//     let pass = ""
+//     let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    
+//     // Add numbers if allowed
+//     if (numberAllowed) str += "0123456789"
+//     // Add special characters if allowed
+//     if (charAllowed) str += "!@#$%^&*-_+=[]{}~`"
+
+//     // Generate random password
+//     for (let i = 1; i <= length; i++) {
+//       let char = Math.floor(Math.random() * str.length + 1)
+//       pass += str.charAt(char)
+//     }
+
+//     setPassword(pass)
+//   }, [length, numberAllowed, charAllowed, setPassword])
+
+//   /**
+//    * Copy to clipboard function using useCallback
+//    * Memoized to prevent unnecessary recreations
+//    * Selects the password input and copies its value
+//    */
+//   const copyPasswordToClipboard = useCallback(() => {
+//     passwordRef.current?.select(); // Select the input field
+//     passwordRef.current?.setSelectionRange(0, 999); // Ensure all text is selected
+//     window.navigator.clipboard.writeText(password) // Copy to clipboard
+//   }, [password])
+
+//   /**
+//    * useEffect hook to generate password when:
+//    * - Component mounts
+//    * - Any dependency (length, numberAllowed, charAllowed) changes
+//    * - passwordGenerator function changes
+//    */
+//   useEffect(() => {
+//     passwordGenerator()
+//   }, [length, numberAllowed, charAllowed, passwordGenerator])
+
+//   return (
+//     // Enhanced UI with background and better styling
+//     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 flex items-center justify-center p-4">
+//       <div className="w-full max-w-md mx-auto shadow-2xl rounded-lg px-6 py-6 bg-gray-800/80 backdrop-blur-sm border border-gray-700">
+//         <h1 className='text-white text-center text-2xl font-bold mb-6'>Password Generator</h1>
+        
+//         {/* Password display and copy section */}
+//         <div className="flex shadow-lg rounded-lg overflow-hidden mb-6">
+//           <input
+//               type="text"
+//               value={password}
+//               className="outline-none w-full py-3 px-4 bg-gray-700 text-white placeholder-gray-400"
+//               placeholder="Your password will appear here"
+//               readOnly
+//               ref={passwordRef}
+//           />
+//           <button
+//             onClick={copyPasswordToClipboard}
+//             className='outline-none bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 transition-colors duration-200'
+//           >
+//             Copy
+//           </button>
+//         </div>
+        
+//         {/* Password customization controls */}
+//         <div className='space-y-4'>
+//           {/* Length slider */}
+//           <div className='flex items-center justify-between'>
+//             <label className='text-gray-300'>Length: {length}</label>
+//             <input 
+//               type="range"
+//               min={6}
+//               max={100}
+//               value={length}
+//               className='w-48 h-2 bg-blue-600 rounded-lg appearance-none cursor-pointer'
+//               onChange={(e) => {setLength(e.target.value)}}
+//             />
+//           </div>
+          
+//           {/* Checkbox options */}
+//           <div className="flex items-center space-x-4">
+//             <div className="flex items-center">
+//               <input
+//                   type="checkbox"
+//                   defaultChecked={numberAllowed}
+//                   id="numberInput"
+//                   className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+//                   onChange={() => {
+//                       setNumberAllowed((prev) => !prev);
+//                   }}
+//               />
+//               <label htmlFor="numberInput" className="ml-2 text-gray-300">Include Numbers</label>
+//             </div>
+//             <div className="flex items-center">
+//                 <input
+//                     type="checkbox"
+//                     defaultChecked={charAllowed}
+//                     id="characterInput"
+//                     className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+//                     onChange={() => {
+//                         setCharAllowed((prev) => !prev)
+//                     }}
+//                 />
+//                 <label htmlFor="characterInput" className="ml-2 text-gray-300">Special Characters</label>
+//             </div>
+//           </div>
+          
+//           {/* Generated password strength indicator */}
+//           <div className="pt-2">
+//             <div className="text-sm text-gray-400 mb-1">Password Strength:</div>
+//             <div className="w-full bg-gray-700 rounded-full h-2.5">
+//               <div 
+//                 className={`h-2.5 rounded-full ${
+//                   length < 12 ? 'bg-red-500' : 
+//                   length < 16 ? 'bg-yellow-500' : 'bg-green-500'
+//                 }`} 
+//                 style={{ width: `${Math.min(100, length * 1.5)}%` }}
+//               ></div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default App
